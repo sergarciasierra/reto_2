@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
+import net.thucydides.core.annotations.findby.By;
 
 public class HomePages extends PageObject {
 
@@ -51,9 +52,11 @@ public class HomePages extends PageObject {
 	@FindBy(xpath = "//div[@data-month = \"2018-09\"]//span[@class=\"_dpmg2--date _dpmg2--available _dpmg2--nights-tooltip _dpmg2--days--modifier\"][30]")
 	private WebElement fechaFin;
 	
-
 	public void ingresarVuelo(String origen, String destino, String viajeros, String fecha_inicio, String fecha_fin)
 			throws InterruptedException {
+
+		
+		
 		try {
 			cerrar.click();
 		} catch (Exception e) {
@@ -78,10 +81,9 @@ public class HomePages extends PageObject {
 		
 		inicioTxt.click();
 		Thread.sleep(2000);
-		mesProx.click();
-		mesProx.click();
-		mesProx.click();
-		mesProx.click();
+	
+		seleccionarFecha("2018-12");
+		
 		Thread.sleep(2000);
 		
 //		fechaInicio.isEnabled();
@@ -89,11 +91,28 @@ public class HomePages extends PageObject {
 		fechaInicio.click();
 		
 		Thread.sleep(2000);
-		inicioTxt.click();
+//		finTxt.click();
 		
 		
 //		buscar.click();
 		Thread.sleep(5000);
 	}
+	
+	
+public  boolean seleccionarFecha (String anioMes) throws InterruptedException {
+//	Thread.sleep(1000);
+	for (int i=1 ; i <= 12; i++) {
+		System.out.println("Contador: " + i);
+		try {
+			getDriver().findElement(By.xpath("//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\""+anioMes+"\"]")).isEnabled();
+			return true;
+		}catch(Exception e) {
+			mesProx.click();
+		}
+	}
+	return false;
+ 	
+}
+
 
 }
