@@ -24,8 +24,7 @@ public class BuscarTiquetesDefinitions {
 
 	@Then("^el usuario ve la lista de vuelos disponibles$")
 	public void el_usuario_ve_la_lista_de_vuelos_disponibles() throws Exception {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    buscarTiquetes.consular();
 	}
 
 	@Then("^se genera un archivo Excel con los (\\d+) vuelos mas baratos y se marca en verde el precio mas economico$")

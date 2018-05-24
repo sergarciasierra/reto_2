@@ -139,10 +139,16 @@ public  boolean seleccionarFecha (String anioMes) throws InterruptedException {
 
 // Devuelve los 10 tiquetes más baratos
 public String[] masBaratos () {
-	String[] tiquete = new String[10];
+	String[] tiquete = new String[11];
+	//tiquete[0] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[1]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
+	//tiquete[1] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[2]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
+	//System.out.println("Tiquete 1: " + tiquete[0]);
+	//System.out.println("Tiquete 2: " + tiquete[1]);
+	
+	
 	for (int i=1 ; i <= 11; i++) {
 		try {
-			tiquete[i-1] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span["+i+"]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
+			tiquete[i] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[" + i +"]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
 			System.out.println("Tiquete: " + i + " Valor: " + tiquete[i]);
 		}catch(Exception e) {
 		}

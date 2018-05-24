@@ -1,74 +1,68 @@
 package com.bancolombia.reto_2.utilidades;
-
-import java.io.FileInputStream;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellValue;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
 
 public class ExcelHtas {
-    private static XSSFSheet ExcelHoja;
-    private static XSSFWorkbook ExcelLibro;
-    private static XSSFCell Celda;
-    private static XSSFRow Fila;
-    // Establece la ruta del archivo de Excel y lo abre
-    // Pasar la ruta del archivo y el nombre de la hoja como argumentos de este método     
-    public static void AbrirExcel(String ruta,String NombreHoja) throws Exception {
-                  try {
-                  // Abrimos el archivo excel
-                  FileInputStream ExcelArchivo = new FileInputStream(ruta);
-                  // Accedemos a la hoja de datos requerida
-                  ExcelLibro = new XSSFWorkbook(ExcelArchivo);
-                  ExcelHoja = ExcelLibro.getSheet(NombreHoja);
-                  } catch (Exception e){
-                        throw (e);
-	                  }
-	      }
-	      
-      // Este método lee los datos de una celda de Excel
-      // Pasar como parámetros FilaNum y ColNum   
-      public static String TraerValorCelda(int FilaNum, int ColNum) throws Exception{
-                  try{
-                  Celda = ExcelHoja.getRow(FilaNum).getCell(ColNum);
-                  String CellData = Celda.getStringCellValue();
-                  return CellData;
-	              }catch (Exception e){
-	                    try{
-	                        String CellData = "" + Celda.getNumericCellValue();
-	                        return CellData;
-	                        }catch (Exception e2){                   
-	                        return"";
-	                        }
-	                  }
-	    }    
-	      
-      // Este método escribe en una celda de Excel
-      // Pasar como parámetros FilaNum y ColNum
-      
-    //  public static final Row.MissingCellPolicy RETURN_BLANK_AS_NULL = null;
-      
-public static void PonerValorCelda(String Resultado,  int FilaNum, int ColNum) throws Exception   {
-       try{
-           Fila  = ExcelHoja.getRow(FilaNum);
-           Celda = Fila.getCell(ColNum, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
-           if (Celda == null) { 
-        	   Celda = Fila.createCell(ColNum);
-        	   Celda.setCellValue(Resultado);
-	       } else { 
-	    	   Celda.setCellValue(Resultado);
-	       }
-	       // Constant variables Test Data path and Test Data file name
-	       FileOutputStream fileOut = new FileOutputStream("ruta salida" + "ArchivoSalida");
-	      
-      ExcelLibro.write(fileOut);
-                  fileOut.flush();
-                  fileOut.close();
-            }catch(Exception e){
-                  throw (e);
-            }
-      } 
+    static String ruta = "C:\\Users\\sergarci\\Documents\\Listado_Vuelos.xlsx";
+    static String NombreHoja = "Hoja1";
 
+    public static void abrirExcel() throws IOException {
+          Desktop dt = Desktop.getDesktop();
+          dt.open(new File(ruta));
+    }
+
+    public static void escribirExcel(String[] tarifa) throws IOException {
+          // Using XSSF for xlsx format, for xls use HSSF
+          Workbook miLibro = new XSSFWorkbook();
+          org.apache.poi.ss.usermodel.Sheet miHoja = miLibro.createSheet("ValorTiquetes");
+          
+          CellStyle cellStyle1 = miLibro.createCellStyle();
+
+          int cellIndex = 0;
+
+          for (int i = 0; i < 7; i++) {
+                 Row row = miHoja.createRow(i);
+                 if (i==0) {
+                        cellStyle1 = miLibro.createCellStyle();
+                        cellStyle1.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+                        cellStyle1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+         
+                Cell cell = row.createCell(i);
+                cell.setCellValue(new XSSFRichTextString(tarifa[i]));
+                cell.setCellStyle(cellStyle1);
+                 }
+                 else {
+                 row.createCell(cellIndex).setCellValue(tarifa[i]);
+                 }
+          }
+
+          try {
+                 FileOutputStream fos = new FileOutputStream(ruta);
+                 miLibro.write(fos);
+                 fos.close();
+                 miLibro.close();
+          } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+          } catch (IOException e) {
+                 e.printStackTrace();
+          }
+
+    }
+
+	
+	
 }
