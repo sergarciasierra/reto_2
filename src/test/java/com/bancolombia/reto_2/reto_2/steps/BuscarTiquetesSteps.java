@@ -23,32 +23,21 @@ public class BuscarTiquetesSteps {
 	}
 	
 	@Step
-	public void escogerVuelo(String origen, String destino, String viajeros, String fecha_inicio, String fecha_fin) throws InterruptedException {
+	public void escogerVuelo(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin) throws InterruptedException {
 		home.getDriver().manage().window().maximize();
-		home.ingresarVuelo(origen,destino,viajeros,fecha_inicio,fecha_fin);
+		home.ingresarVuelo(origen,destino,viajeros,anio_mes_inicio,dia_inicio,anio_mes_fin,dia_fin);
 	}
 	
 	@Step
 	public void consultar() {
 		assertEquals("Datos de búsqueda no válidos","Despegar.com . Resultados de Vuelos", consultar.traerTitulo());
-		//consultar.tatat(); //otor metodo
 	}
 	
-	@Test
-	public void pruebaExcel() throws Exception {
+	
+	@Step
+	public void GuardarExcel() throws Exception {
 		//Ruta del Excel
 
-		/*
-		String ruta = "C:\\Users\\sergarci\\Documents\\Listado_Vuelos.xlsx";
-		String rutaSalida = "C:\\Users\\sergarci\\Documents\\Listado_Vuelos2.xlsx";
-//		System.out.print("Prueba");
-	    ExcelHtas.AbrirExcel(ruta, "Hoja1");
-	    String var = ExcelHtas.TraerValorCelda(0,0);
-	    System.out.println("Valor celda 0,0: "+ var);
-		ExcelHtas.PonerValorCelda(rutaSalida,"Hola", 6, 6);
-		var = ExcelHtas.TraerValorCelda(6,6);
-	    System.out.println("Valor celda 6,6: "+ var);
-	    */
 		String [] vector = new String [10];
 		vector[0]= "Siiiii";
 		vector[1]= "Hola 1xx";

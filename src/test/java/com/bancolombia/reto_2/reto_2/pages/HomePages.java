@@ -45,11 +45,11 @@ public class HomePages extends PageObject {
 	@FindBy(xpath = "//div[@class=\"geo-autocomplete geo-show-autocomplete\"]//li[@data-index=\"1\"]/a")
 	private List<WebElement> listaDestino;
 	
-	@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"1\"]")
-	private WebElement diaInicio;
+//	@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"1\"]")
+//	private WebElement diaInicio;
 	
-	@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]")
-	private WebElement diaFin;
+//	@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]")
+//	private WebElement diaFin;
 	
 	@FindBy(xpath = "//div[@class=\"_dpmg2--controlsWrapper\"]//div[@class=\"_dpmg2--controls-next\"]")
 	private WebElement mesProx;
@@ -57,7 +57,7 @@ public class HomePages extends PageObject {
 	@FindBy(xpath = "//div[@data-month = \"2018-09\"]//span[@class=\"_dpmg2--date _dpmg2--available _dpmg2--nights-tooltip _dpmg2--days--modifier\"][30]")
 	private WebElement fechaFin;
 	
-	public void ingresarVuelo(String origen, String destino, String viajeros, String fecha_inicio, String fecha_fin)
+	public void ingresarVuelo(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin)
 			throws InterruptedException {	
 	
 		try {
@@ -89,21 +89,22 @@ public class HomePages extends PageObject {
 			listaCiudad2.get(0).click();
 		}
 		
+// ******************************
 // Fecha inicial
 		inicioTxt.click();
 		Thread.sleep(500);
-		if (seleccionarFecha("2018-06"))
+		if (seleccionarFecha(anio_mes_inicio))
 		{
-			diaInicio.click();
+			dia(anio_mes_inicio,dia_inicio).click();
 		};
 //		Thread.sleep(3000);
 
 // Fecha final
 //		finTxt.click();
 		Thread.sleep(500);
-		if (seleccionarFecha("2018-06"))
+		if (seleccionarFecha(anio_mes_fin))
 		{
-			diaFin.click();
+			dia(anio_mes_fin,dia_fin).click();
 		};
 		Thread.sleep(1000);
 		
@@ -119,9 +120,12 @@ public class HomePages extends PageObject {
 //Consulta de tiquetes
 		masBaratos();
 		
+// Guardar en Excel
+		
+		
 	}
 	
-// Seleccionar la fecha inicio y la fecha fin de la consulta	
+// Seleccionar en el calendario el mes de la fecha inicio y de la fecha fin de la consulta
 public  boolean seleccionarFecha (String anioMes) throws InterruptedException {
 	Thread.sleep(1000);
 	for (int i=1 ; i <= 12; i++) {
@@ -136,6 +140,25 @@ public  boolean seleccionarFecha (String anioMes) throws InterruptedException {
 	return false;
  	
 }
+
+// Elemento web para diaInicio y diaFin
+public  WebElement dia(String anioMes, String dia) throws InterruptedException {
+	WebElement miXpath;
+			miXpath = getDriver().findElement(By.xpath("//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\""+anioMes+"\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\""+dia+"\"]"));
+			return miXpath;	
+}
+
+/*
+//Elemento web para diaFin
+public  WebElement diaFin(String anioMes, String dia) throws InterruptedException {
+	WebElement miXpath;
+			miXpath = getDriver().findElement(By.xpath("//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]"));
+			return miXpath;	
+}
+
+//@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]")
+//private WebElement diaFin;
+*/
 
 // Devuelve los 10 tiquetes más baratos
 public String[] masBaratos () {

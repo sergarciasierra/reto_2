@@ -14,8 +14,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-
 public class ExcelHtas {
     static String ruta = "C:\\Users\\sergarci\\Documents\\Listado_Vuelos.xlsx";
     static String NombreHoja = "Hoja1";
