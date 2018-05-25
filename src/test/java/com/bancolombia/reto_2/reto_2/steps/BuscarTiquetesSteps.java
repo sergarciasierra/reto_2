@@ -2,6 +2,8 @@ package com.bancolombia.reto_2.reto_2.steps;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.fluentlenium.core.annotation.Page;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public class BuscarTiquetesSteps {
 	}
 	
 	@Step
-	public void escogerVuelo(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin) throws InterruptedException {
+	public void escogerVuelo(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin) throws InterruptedException, IOException {
 		home.getDriver().manage().window().maximize();
 		home.ingresarVuelo(origen,destino,viajeros,anio_mes_inicio,dia_inicio,anio_mes_fin,dia_fin);
 	}
@@ -32,16 +34,10 @@ public class BuscarTiquetesSteps {
 	public void consultar() {
 		assertEquals("Datos de búsqueda no válidos","Despegar.com . Resultados de Vuelos", consultar.traerTitulo());
 	}
-	
-	
+		
 	@Step
 	public void GuardarExcel() throws Exception {
-		//Ruta del Excel
-
-		String [] vector = new String [10];
-		vector[0]= "Siiiii";
-		vector[1]= "Hola 1xx";
-		ExcelHtas.escribirExcel(vector);
+		ExcelHtas.escribirExcel(home.masBaratos());
 	    
 	}
 

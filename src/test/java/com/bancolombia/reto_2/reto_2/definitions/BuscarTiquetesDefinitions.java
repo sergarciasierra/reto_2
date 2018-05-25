@@ -1,5 +1,7 @@
 package com.bancolombia.reto_2.reto_2.definitions;
 
+import java.io.IOException;
+
 import com.bancolombia.reto_2.reto_2.steps.BuscarTiquetesSteps;
 
 import cucumber.api.PendingException; 
@@ -18,7 +20,7 @@ public class BuscarTiquetesDefinitions {
 
 	@When("^El usuario selecciona (.*), (.*), (.*), (.*), (.*), (.*), (.*) y da clic en buscar$")
 	public void el_usuario_selecciona_Medellín_Cartagena_y_da_clic_en_buscar
-		(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin) throws InterruptedException {
+		(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin) throws InterruptedException, IOException {
 	    	buscarTiquetes.escogerVuelo(origen,destino,viajeros,anio_mes_inicio,dia_inicio,anio_mes_fin,dia_fin);
 	}
 	

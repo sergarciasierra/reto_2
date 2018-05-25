@@ -1,5 +1,6 @@
 package com.bancolombia.reto_2.reto_2.pages;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -9,7 +10,10 @@ import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.annotations.findby.By;
 
 public class HomePages extends PageObject {
-
+	public String[] tiquetes = new String[11];
+	
+	
+	
 	@FindBy(xpath = "//div[@class=\"nevo-header-navigation\"]//span[text()=\"Vuelos\"]")
 	private WebElement vuelo;
 	@FindBy(xpath = "//span[@class=\"as-login-close as-login-icon-close-circled\"]")
@@ -58,7 +62,7 @@ public class HomePages extends PageObject {
 	private WebElement fechaFin;
 	
 	public void ingresarVuelo(String origen, String destino, String viajeros, String anio_mes_inicio, String dia_inicio, String anio_mes_fin, String dia_fin)
-			throws InterruptedException {	
+			throws InterruptedException, IOException {	
 	
 		try {
 			cerrar.click();
@@ -89,7 +93,6 @@ public class HomePages extends PageObject {
 			listaCiudad2.get(0).click();
 		}
 		
-// ******************************
 // Fecha inicial
 		inicioTxt.click();
 		Thread.sleep(500);
@@ -113,12 +116,13 @@ public class HomePages extends PageObject {
 		unoMas.click();
 
 
-//Búsqueda
+//Búsqueda de tiquetes con los parámetros ingresados
 		buscar.click();
-		Thread.sleep(10000);
+		Thread.sleep(8000);
 		
 //Consulta de tiquetes
-		masBaratos();
+//		tiquetes = masBaratos();
+//		ExcelHtas.escribirExcel(tiquetes);
 		
 // Guardar en Excel
 		
@@ -141,7 +145,7 @@ public  boolean seleccionarFecha (String anioMes) throws InterruptedException {
  	
 }
 
-// Elemento web para diaInicio y diaFin
+// Elemento web para clic en el diaInicio y en el diaFin
 public  WebElement dia(String anioMes, String dia) throws InterruptedException {
 	WebElement miXpath;
 			miXpath = getDriver().findElement(By.xpath("//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\""+anioMes+"\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\""+dia+"\"]"));
@@ -160,15 +164,10 @@ public  WebElement diaFin(String anioMes, String dia) throws InterruptedExceptio
 //private WebElement diaFin;
 */
 
-// Devuelve los 10 tiquetes más baratos
+// Devuelve en un vector los 10 tiquetes más baratos de la consulta 
 public String[] masBaratos () {
 	String[] tiquete = new String[11];
-	//tiquete[0] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[1]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
-	//tiquete[1] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[2]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
-	//System.out.println("Tiquete 1: " + tiquete[0]);
-	//System.out.println("Tiquete 2: " + tiquete[1]);
-	
-	
+
 	for (int i=1 ; i <= 11; i++) {
 		try {
 			tiquete[i] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[" + i +"]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
