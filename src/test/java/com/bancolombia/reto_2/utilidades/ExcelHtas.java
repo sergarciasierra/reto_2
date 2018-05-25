@@ -34,7 +34,7 @@ public class ExcelHtas {
 
 		int cellIndex = 0;
 
-		for (int i = 0; i < 11; i++) {
+		for (int i = 0; i < 7; i++) {
 			Row fila = miHoja.createRow(i);
 			Cell celda = fila.createCell(cellIndex);
 			if (i == 0) {

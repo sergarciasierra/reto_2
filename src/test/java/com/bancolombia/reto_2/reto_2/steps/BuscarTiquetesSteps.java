@@ -37,7 +37,8 @@ public class BuscarTiquetesSteps {
 		
 	@Step
 	public void GuardarExcel() throws Exception {
-		ExcelHtas.escribirExcel(home.masBaratos());
+		
+		ExcelHtas.escribirExcel(consultar.masBaratos());
 	    
 	}
 

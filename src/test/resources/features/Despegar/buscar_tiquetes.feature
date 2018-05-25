@@ -8,4 +8,5 @@ Feature: Buscar los 7 precios más baratos de tiquetes de la página despegar.co
 
 Examples: 
 |pagina|origen|destino|viajeros|anio_mes_inicio|dia_inicio|anio_mes_fin|dia_fin|
-|https://www.despegar.com.co/|Medellín|Cartagena|2|2018-06|1|2018-06|30|
+|https://www.despegar.com.co/|Medellín|Cartagena|2|2018-09|1|2018-09|30|
+|https://www.despegar.com.co/|Medellín|XX|2|2018-06|1|2018-06|30|

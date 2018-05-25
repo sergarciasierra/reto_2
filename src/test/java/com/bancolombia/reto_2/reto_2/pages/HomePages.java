@@ -49,12 +49,6 @@ public class HomePages extends PageObject {
 	@FindBy(xpath = "//div[@class=\"geo-autocomplete geo-show-autocomplete\"]//li[@data-index=\"1\"]/a")
 	private List<WebElement> listaDestino;
 	
-//	@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"1\"]")
-//	private WebElement diaInicio;
-	
-//	@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]")
-//	private WebElement diaFin;
-	
 	@FindBy(xpath = "//div[@class=\"_dpmg2--controlsWrapper\"]//div[@class=\"_dpmg2--controls-next\"]")
 	private WebElement mesProx;
 		
@@ -79,18 +73,26 @@ public class HomePages extends PageObject {
 		try {
 			listaCiudad.get(0).click();
 		} catch (Exception e) {
+			try {
 			listaCiudad2.get(0).click();
-		}
+			} catch (Exception e1) {
+			}
+		}		
 		Thread.sleep(2000);
 		
 // Ciudad destino
 		destinoTxt.clear();
-		destinoTxt.sendKeys(destino);
+		try {
+			destinoTxt.sendKeys(destino);	
+		} catch (Exception e3) {}
+		
 		Thread.sleep(2000);
 		try {
 			listaCiudad.get(0).click();
 		} catch (Exception e) {
+			try {
 			listaCiudad2.get(0).click();
+			} catch (Exception e2) {}
 		}
 		
 // Fecha inicial
@@ -118,14 +120,6 @@ public class HomePages extends PageObject {
 
 //Búsqueda de tiquetes con los parámetros ingresados
 		buscar.click();
-		Thread.sleep(8000);
-		
-//Consulta de tiquetes
-//		tiquetes = masBaratos();
-//		ExcelHtas.escribirExcel(tiquetes);
-		
-// Guardar en Excel
-		
 		
 	}
 	
@@ -153,24 +147,13 @@ public  WebElement dia(String anioMes, String dia) throws InterruptedException {
 }
 
 /*
-//Elemento web para diaFin
-public  WebElement diaFin(String anioMes, String dia) throws InterruptedException {
-	WebElement miXpath;
-			miXpath = getDriver().findElement(By.xpath("//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]"));
-			return miXpath;	
-}
-
-//@FindBy(xpath = "//div[@class = \"_dpmg2--months\"]/div[contains(@class,\"month-active\") and @data-month=\"2018-06\"]/div[@class=\"_dpmg2--dates\"]/span[text()=\"30\"]")
-//private WebElement diaFin;
-*/
-
 // Devuelve en un vector los 10 tiquetes más baratos de la consulta 
 public String[] masBaratos () {
 	String[] tiquete = new String[11];
 
-	for (int i=1 ; i <= 11; i++) {
+	for (int i=0 ; i < 11; i++) {
 		try {
-			tiquete[i] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[" + i +"]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
+			tiquete[i] = getDriver().findElement(By.xpath("//*[@id=\"clusters\"]/span[" + (i+1) +"]/span/cluster/div/div/span/fare/span/span/div[1]/item-fare/p/span/flights-price/span/flights-price-element/span/span/em/span[2]")).getText();
 			System.out.println("Tiquete: " + i + " Valor: " + tiquete[i]);
 		}catch(Exception e) {
 		}
@@ -179,6 +162,6 @@ public String[] masBaratos () {
 	return tiquete;
 	
 }
-
+*/
 
 }
